@@ -1,6 +1,10 @@
 #include <stdio.h>
-
 int main(void)
 {
-	printf("Hello, World!\n");
+	FILE *f = fopen("hi.txt", "r");
+	if (f == NULL)
+	{
+		return 1;
+	}
+	printf("Success\n");
 }
