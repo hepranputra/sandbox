@@ -1,8 +1,19 @@
-import sys
+book = dict()
 
-if len(sys.argv) != 2:
-    print("Missing command-line argument")
-    sys.exit()
+book["title"] = "Corduroy"
+book["author"] = "Don Freeman"
 
-print(f"hello, {sys.argv[1]}")
-sys.exit()
+print(book)
+
+books = list()
+
+books += [book]
+
+print(books)
+
+book["title"] = "Harry Potter"
+book["author"] = "J. K. Rowling"
+
+books += [book]
+
+print(books[0]["corud"])
