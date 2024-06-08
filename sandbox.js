@@ -1,91 +1,148 @@
-printFarmInventory3(7, 11, 3);
-
-function zeroPad(number, width) {
-    let string = String(number);
-    while (string.length < width) {
-        string = "0" + string;
+class Temperature {
+    constructor(celcius) {
+        this.celcius = celcius;
     }
-    return string;
-}
-
-function printFarmInventory3(cows, chickens, pigs) {
-    console.log(`${zeroPad(cows, 3)} Cows`);
-    console.log(`${zeroPad(chickens, 3)} Chickens`);
-    console.log(`${zeroPad(pigs, 3)} Pigs`);
-}
-
-function printZeroPaddedWithLabel(number, label) {
-    let numberString = String(number);
-    while (numberString.length < 3) {
-        numberString = "0" + numberString;
+    get fahrenheit() {
+        return this.celcius * 1.8 + 32;
     }
-    console.log(`${numberString} ${label}`);
-}
-
-function printFarmInventory2(cows, chickens, pigs) {
-    printZeroPaddedWithLabel(cows, "Cows");
-    printZeroPaddedWithLabel(chickens, "Chickens");
-    printZeroPaddedWithLabel(pigs, "Pigs");
-}
-
-function printFarmInventory1(cows, chickens) {
-    let cowString = String(cows);
-    while (cowString.length < 3) {
-        cowString = "0" + cowString;
+    set fahrenheit(value) {
+        this.celcius = (value - 32) / 1.8;
     }
-    console.log(`${cowString} Cows`);
-    
-    let chickenString = String(chickens);
-    while (chickenString.length < 3) {
-        chickenString = "0" + chickenString;
-    }
-    console.log(`${chickenString} Chickens`);
-}
-
-function findSolution(target) {
-    function find(current, history) {
-        if (current == target) {
-            return history;
-        } else if (current > target) {
-            return null;
-        } else {
-            return find(current + 5, `(${history} + 5)`) ?? 
-                   find(current * 3, `(${history} * 3)`);
-        }
-    }
-    return find(1, "1");
-}
-
-function power(base, exponent) {
-    if (exponent == 0) {
-        return 1;
-    } else {
-        return base * power(base, exponent - 1);
+    static fromFahrenheit(value) {
+        return new Temperature((value - 32) / 1.8);
     }
 }
 
-function multiplier(factor) {
-    return number => number * factor;
-}
+let boil = Temperature.fromFahrenheit(212);
+console.log(boil.celcius);
 
-function wrapValue(n) {
-    let local = n;
-    return () => local;
-}
+let temp = new Temperature(22);
+console.log(temp.fahrenheit);
+temp.fahrenheit = 86;
+console.log(temp.celcius);
 
-function roundTo(n, step = 1) {
-    let remainder = n % step;
-    return n - remainder + (remainder < (step / 2) ? 0 : step);
-}
-
-function minus(a, b) {
-    if (b === undefined) {
-        return -a;
+let varyingSize = {
+    get size() {
+        return Math.floor(Math.random() * 100);
     }
-    return a - b;
+};
+// console.log(varyingSize.size);
+// console.log(varyingSize.size);
+
+// let ages = {
+//     Boris: 39,
+//     Liang: 22,
+//     Júlia: 62,
+// };
+// console.log(`Júlia is ${ages["Júlia"]}`);
+// console.log("Is Jack's age known?", "Jack" in ages);
+// console.log("Is toString's age known", "toString" in ages);
+// 
+// console.log("toString" in Object.create(null));
+
+let ages = new Map();
+ages.set("Boris", 39);
+ages.set("Liang", 22);
+ages.set("Júlia", 62);
+
+// console.log(`Júlia is ${ages.get("Júlia")}`);
+// console.log("Is Jack's age known?", ages.has("Jack"));
+// console.log(ages.has("toString"));
+// 
+// console.log(Object.hasOwn({x: 1}, "x"));
+// console.log(Object.hasOwn({x: 1}, "toString"));
+
+const nums = [1, 2, 3, 4];
+
+const triples = nums.map(num => num ** 3);
+// console.log(triples);
+
+class SecretiveObject {
+    #getSecret() {
+        return "I ate all the plums";
+    }
+    interrogate() {
+        let shallISayIt = this.#getSecret();
+        return "never";
+    }
 }
 
-function square(x) {
-    return x * x;
+class RandomSource {
+    #max;
+    constructor(max) {
+        this.#max = max;
+    }
+    getNumber() {
+        return Math.floor(Math.random() * this.#max);
+    }
 }
+
+// function ArchaicRabbit(type) {
+//     this.type = type;
+// }
+// ArchaicRabbit.prototype.speak = function(line) {
+//     console.log(`The ${this.type} rabbit says '${line}'`);
+// };
+// let oldSchoolRabbit = new ArchaicRabbit("old school");
+
+class Rabbit {
+    constructor(type) {
+        this.type = type;
+    }
+    speak(line) {
+        console.log(`The ${this.type} rabbit says '${line}'`);
+    }
+}
+
+let killerRabbit = new Rabbit("killer");
+
+Rabbit.prototype.toString = function() {
+    return `a ${this.type} rabbit`;
+};
+// console.log(String(killerRabbit));
+
+Rabbit.prototype.teeth = "small";
+// console.log(killerRabbit.teeth);
+
+killerRabbit.teeth = "long, sharp, and bloody";
+// console.log(killerRabbit.teeth);
+// console.log((new Rabbit("basic")).teeth);
+// console.log(Rabbit.prototype.teeth);
+// console.log(Array.prototype.toString == Object.prototype.toString);
+// console.log([1, 2].toString());
+// console.log(Object.prototype.toString.call([1, 2]));
+
+class Particle {
+    speed = 0;
+    constructor(position) {
+        this.position = position;
+    }
+}
+
+let object = new class { getWord() { return "hello"; } };
+// console.log(object.getWord());
+
+
+// console.log(Object.getPrototypeOf(Rabbit));
+// console.log(Object.getPrototypeOf(killerRabbit));
+
+// console.log(Object.getPrototypeOf(Rabbit) == Function.prototype);
+// console.log(Object.getPrototypeOf(killerRabbit) == Rabbit.prototype);
+
+function makeRabbit(type) {
+    let rabbit = Object.create(protoRabbit);
+    rabbit.type = type;
+    return rabbit;
+}
+
+let protoRabbit = {
+    speak(line) {
+        console.log(`The ${this.type} rabbit says '${line}'`);
+    }
+};
+
+function speak(line) {
+    console.log(`The ${this.type} rabbit says '${line}'`);
+}
+
 
